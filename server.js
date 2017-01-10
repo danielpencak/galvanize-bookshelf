@@ -1,5 +1,6 @@
 'use strict';
 
+// Automatically load secret key
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }

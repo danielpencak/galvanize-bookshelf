@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
-
+/* eslint-disable no-unused-vars*/
+/* eslint-disable max-len*/
 'use strict';
 
 process.env.NODE_ENV = 'test';
