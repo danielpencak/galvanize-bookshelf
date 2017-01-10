@@ -11,7 +11,7 @@ const request = require('supertest');
 const knex = require('../knex');
 const server = require('../server');
 
-suite('part3 routes', () => {
+suite('part4 routes users bonus', () => {
   before((done) => {
     knex.migrate.latest()
       .then(() => {
@@ -56,37 +56,7 @@ suite('part3 routes', () => {
         email: 'john.siracusa@gmail.com'
       })
       .expect('Content-Type', /json/)
-      .end((httpErr, _res) => {
-        if (httpErr) {
-          return done(httpErr);
-        }
-
-        knex('users')
-          .where('id', 2)
-          .first()
-          .then((user) => {
-            const hashedPassword = user.hashed_password;
-
-            delete user.hashed_password;
-            delete user.created_at;
-            delete user.updated_at;
-
-            assert.deepEqual(user, {
-              id: 2,
-              first_name: 'John',
-              last_name: 'Siracusa',
-              email: 'john.siracusa@gmail.com'
-            });
-
-            // eslint-disable-next-line no-sync
-            const isMatch = bcrypt.compareSync(password, hashedPassword);
-
-            assert.isTrue(isMatch, "passwords don't match");
-            done();
-          })
-          .catch((dbErr) => {
-            done(dbErr);
-          });
-      });
+      .expect('set-cookie', /token=[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+; Path=\/;.+HttpOnly/)
+      .end(done);
   });
 });

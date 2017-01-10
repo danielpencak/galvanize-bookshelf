@@ -1,4 +1,4 @@
-#### [⇐ Previous](2_express_knex.md) | [Next ⇒](4_authentication_authorization.md)
+#### [⇐ Previous](2_express_knex.md) | [Next ⇒](4_user_authentication.md)
 
 # User Registration
 
@@ -40,9 +40,9 @@ npm test test/part3.seeds.test.js
 
 In the `routes/users.js` module, add middleware to handle the following HTTP requests and send back the associated HTTP response. The information in both the request body and response body use the `application/json` content type.
 
-| Request Method | Request URL        | Request Body                                                                                                        | Response Status | Response Body                                                   |
-|----------------|--------------------|---------------------------------------------------------------------------------------------------------------------|-----------------|-----------------------------------------------------------------|
-| `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com", "password": "ilikebigcats" }` | `200`           | `{ id: 2, "first_name": "John", "last_name": "Siracusa", ... }` |
+| Request Method | Request URL        | Request Body                                                                                                        | Response Status | Response Body                                                  |
+|----------------|--------------------|---------------------------------------------------------------------------------------------------------------------|-----------------|----------------------------------------------------------------|
+| `POST`         | `/users`           | `{ "first_name": "John", "last_name": "Siracusa", "email": "john.siracusa@gmail.com", "password": "ilikebigcats" }` | `200`           | `{ id: 2, "first_name": "John", "last_name": "Siracusa", ... } |
 
 **NOTE:** Only store a cryptographic hash of the password in the database. And don't send the new user's password or hashed password in the response body.
 
@@ -100,4 +100,4 @@ Using your preferred ESLint rules, lint your project with the `npm run lint .` c
 
 Once you're satisfied, find a classmate and see if that person would like some help.
 
-#### [⇐ Previous](2_express_knex.md) | [Next ⇒](4_authentication_authorization.md)
+#### [⇐ Previous](2_express_knex.md) | [Next ⇒](4_user_authentication.md)

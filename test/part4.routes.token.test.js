@@ -47,7 +47,6 @@ suite('part4 routes token', () => {
         password: 'youreawizard'
       })
       .expect('set-cookie', /token=[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+; Path=\/;.+HttpOnly/)
-      .expect('Content-Type', /json/)
       .expect((res) => {
         delete res.body.createdAt;
         delete res.body.updatedAt;
@@ -57,7 +56,9 @@ suite('part4 routes token', () => {
         firstName: 'Joanne',
         lastName: 'Rowling',
         email: 'jkrowling@gmail.com'
-      }, done);
+      })
+      .expect('Content-Type', /json/)
+      .end(done);
   });
 
   test('GET /token with token', (done) => {
@@ -91,8 +92,8 @@ suite('part4 routes token', () => {
       .del('/token')
       .set('Accept', 'application/json')
       .expect('set-cookie', /token=; Path=\//)
-      .expect('Content-Type', /json/)
-      .expect(200, 'true', done);
+      .expect(200)
+      .end(done);
   });
 
   test('POST /token with bad email', (done) => {
