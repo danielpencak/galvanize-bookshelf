@@ -14,10 +14,10 @@ const router = express.Router();
 const authorize = ((req, res, next) => {
   jwt.verify(req.cookies.token, process.env.JWT_KEY, (err, payload) => {
     if (err) {
-      return next(boom.create(401, 'Unauthorized'));
+      return next(boom.create(401, 'Unauthorized')); /* if no return will get to line 20 - req.claim = undefined */
     }
 
-    req.claim = payload;
+    req.claim = payload; /* { userId: ... } */
 
     next();
   });
@@ -38,11 +38,13 @@ router.get('/favorites', authorize, (req, res, next) => {
     });
 });
 
-router.get('/favorites/check?', authorize, (req, res, next) => {
-  knex('favorites')
-    .innerJoin('books', 'books.id', 'favorites.book_id')
+router.get('/favorites/check', authorize, (req, res, next) => {
+  const bookId = Number.parseInt(req.query.bookId);
+
+  knex('books')
+    .innerJoin('favorites', 'favorites.book_id', 'books.id')
     .where('favorites.user_id', req.claim.userId)
-    .where('favorites.book_id', req.query.bookId)
+    .where('favorites.book_id', bookId)
     .first()
     .then((row) => {
       if (row) {
@@ -87,10 +89,11 @@ router.delete('/favorites', authorize, (req, res, next) => {
 
   knex('favorites')
     .where('favorites.book_id', bookId)
+    .where('favorites.user_id', req.claim.userId)
     .first()
     .then((row) => {
       if (!row) {
-        return next();
+        throw boom.create(404, 'Favorite not found');
       }
 
       favorite = row;
