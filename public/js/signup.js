@@ -45,7 +45,6 @@
 
     $.ajax(options)
       .done(() => {
-        console.log('hello');
         window.location.href = '/login.html';
       })
       .fail(($xhr) => {

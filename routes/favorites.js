@@ -1,5 +1,6 @@
 /* eslint-disable camelcase*/
 /* eslint-disable no-extra-parens*/
+/* eslint-disable max-len */
 'use strict';
 
 const boom = require('boom');
