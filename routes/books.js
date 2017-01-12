@@ -100,13 +100,12 @@ router.delete('/books/:id', (req, res, next) => {
     .del()
     .returning('*')
     .where('id', req.params.id)
-    .first()
-    .then((book) => {
-      if (!book) {
+    .then((books) => {
+      if (!books[0]) {
         throw boom.create(404, 'Not Found');
       }
-      delete book.id;
-      res.send(camelizeKeys(book));
+      delete books[0].id;
+      res.send(camelizeKeys(books[0]));
     })
     .catch((err) => {
       next(err);
